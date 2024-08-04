@@ -1,12 +1,11 @@
 node{
-  def mavenHome = tool name: 'maven3.9.6'    
+  def mavenHome = tool name: 'maven 3.9.8'    
   stage('1.clonecode'){
-    git "https://github.com/LandmakTechnology/maven-web-application"
+    git "https://github.com/smith0037/paypal34.git"
   }
   stage('2.mavenBuild'){
     sh "${mavenHome}/bin/mvn package"
   }
-/*
   stage('3.codeQualityAnalysis'){
     sh "${mavenHome}/bin/mvn sonar:sonar"    
   }
@@ -15,7 +14,7 @@ node{
     sh "${mavenHome}/bin/mvn deploy"
   }
   stage('5.deploy2UAT'){
-      deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.144.85.2:8088/')], contextPath: null, war: 'target/*war'
+      deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://18.221.147.55:8080/manager/html')], contextPath: null, war: 'target/*war'
 
   }
   stage('6.ManualApproval'){
@@ -27,10 +26,8 @@ node{
   }
   stage('7.deploy2prod'){
           //use deploy to container plugin
-    deploy adapters: [tomcat9(credentialsId: 'tomcat-credentials', path: '', url: 'http://3.144.85.2:8088/')], contextPath: null, war: 'target/*war'
- 
+deploy adapters: [tomcat9(credentialsId: 'tomcat-credential', path: '', url: 'http://18.221.147.55:8080/manager/html')], contextPath: null, war: 'target/*war'
   }
-*/
     stage('8.apm'){
     sh "echo 'monitoring and observation and alerting' "
     sh "echo 'application performance Monitoring in progress' "
@@ -41,7 +38,7 @@ node{
     emailext body: '''The build and Deployment status for tesla-webapp.
 
 Regards,
-Landmark Technologies''', recipientProviders: [developers(), upstreamDevelopers(), buildUser()], subject: 'job status', to: 'mylandmarktech@gmail.com'
+Kentech solutions''', recipientProviders: [contributor(), developers()], subject: 'project', to: 'kayodeadeyemi37@gmail.com'
 
   }
 
